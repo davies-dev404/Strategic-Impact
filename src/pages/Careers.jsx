@@ -17,13 +17,25 @@ export default function Careers() {
       />
       <Navigation />
       
-      <main className="flex-grow pt-24 pb-20">
-        <section className="py-20">
+      {/* HEADER SECTION */}
+      <section className="bg-primary text-white pt-40 pb-20">
         <div className="container mx-auto px-4 md:px-6">
-          <SectionHeading 
-            title="Join Our Team" 
-            subtitle="Careers" 
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl"
+          >
+            <span className="text-accent font-bold tracking-widest text-xs uppercase mb-4 block">Careers</span>
+            <h1 className="text-5xl md:text-7xl font-serif leading-tight">
+              Join Our Team
+            </h1>
+          </motion.div>
+        </div>
+      </section>
+
+      <main className="flex-grow py-24">
+        <div className="container mx-auto px-4 md:px-6">
           
           <div className="max-w-3xl mx-auto mt-12">
             <motion.div
@@ -60,7 +72,6 @@ export default function Careers() {
             </motion.div>
           </div>
         </div>
-      </section>
       </main>
 
       <Footer />
