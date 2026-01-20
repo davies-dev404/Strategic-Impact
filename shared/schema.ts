@@ -1,18 +1,44 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+// Content Tables
+export const services = pgTable("services", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  benefits: jsonb("benefits").$type<string[]>().notNull(), // Array of benefit strings
+  icon: text("icon").notNull(), // Lucide icon name
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const caseStudies = pgTable("case_studies", {
+  id: serial("id").primaryKey(),
+  client: text("client").notNull(),
+  industry: text("industry").notNull(),
+  challenge: text("challenge").notNull(),
+  solution: text("solution").notNull(),
+  result: text("result").notNull(),
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const inquiries = pgTable("inquiries", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  company: text("company"),
+  message: text("message").notNull(),
+});
+
+// Schemas
+export const insertServiceSchema = createInsertSchema(services).omit({ id: true });
+export const insertCaseStudySchema = createInsertSchema(caseStudies).omit({ id: true });
+export const insertInquirySchema = createInsertSchema(inquiries).omit({ id: true });
+
+// Types
+export type Service = typeof services.$inferSelect;
+export type InsertService = z.infer<typeof insertServiceSchema>;
+
+export type CaseStudy = typeof caseStudies.$inferSelect;
+export type InsertCaseStudy = z.infer<typeof insertCaseStudySchema>;
+
+export type Inquiry = typeof inquiries.$inferSelect;
+export type InsertInquiry = z.infer<typeof insertInquirySchema>;

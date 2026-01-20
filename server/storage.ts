@@ -1,38 +1,45 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import {
+  services,
+  caseStudies,
+  inquiries,
+  type Service,
+  type CaseStudy,
+  type InsertInquiry,
+  type InsertService,
+  type InsertCaseStudy
+} from "@shared/schema";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getServices(): Promise<Service[]>;
+  createService(service: InsertService): Promise<Service>;
+  getCaseStudies(): Promise<CaseStudy[]>;
+  createCaseStudy(caseStudy: InsertCaseStudy): Promise<CaseStudy>;
+  createInquiry(inquiry: InsertInquiry): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getServices(): Promise<Service[]> {
+    return await db.select().from(services);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async createService(insertService: InsertService): Promise<Service> {
+    const [service] = await db.insert(services).values(insertService).returning();
+    return service;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getCaseStudies(): Promise<CaseStudy[]> {
+    return await db.select().from(caseStudies);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createCaseStudy(insertCaseStudy: InsertCaseStudy): Promise<CaseStudy> {
+    const [caseStudy] = await db.insert(caseStudies).values(insertCaseStudy).returning();
+    return caseStudy;
+  }
+
+  async createInquiry(insertInquiry: InsertInquiry): Promise<void> {
+    await db.insert(inquiries).values(insertInquiry);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
