@@ -73,25 +73,32 @@ async function seedDatabase() {
   const existingCases = await storage.getCaseStudies();
   if (existingCases.length === 0) {
     await storage.createCaseStudy({
-      client: "FinTech Innovators",
-      industry: "Financial Technology",
-      challenge: "Launching a disruptive product in a saturated market with low brand awareness.",
-      solution: "Developed a contrarian thought leadership campaign challenging traditional banking norms.",
-      result: "Featured in WSJ, TechCrunch, and Forbes; 300% increase in organic leads within 3 months.",
+      client: "Safaricom PLC",
+      industry: "Telecommunications",
+      challenge: "Communicating the socio-economic impact of M-PESA to international investors.",
+      solution: "Developed an 'Impact Narrative' series including a mini-documentary and white paper for global financial summits.",
+      result: "Secured top-tier coverage in Financial Times and Bloomberg; 25% increase in ESG investor interest.",
     });
     await storage.createCaseStudy({
-      client: "GreenEarth Corp",
-      industry: "Sustainability / Non-Profit",
-      challenge: "Mitigating reputational damage following a complex operational incident.",
-      solution: "Executed a transparent, multi-channel crisis response and community engagement program.",
-      result: "Restored stakeholder trust with 85% positive sentiment analysis post-campaign.",
+      client: "Equity Bank",
+      industry: "Financial Services",
+      challenge: "Managing public perception during a complex pan-African expansion and rebranding phase.",
+      solution: "Executed a multi-market media relations strategy highlighting regional integration and financial inclusion.",
+      result: "Successful launch in 3 new markets; brand equity increased by 40% across East Africa.",
     });
     await storage.createCaseStudy({
-      client: "Apex Health",
-      industry: "Healthcare",
-      challenge: "Positioning a new CEO as a visionary leader in the digital health space.",
-      solution: "Curated a series of op-eds and keynote opportunities at major industry conferences.",
-      result: "CEO named 'Top 50 in Digital Health'; secured $20M in Series B funding.",
+      client: "KWS (Kenya Wildlife Service)",
+      industry: "Public Sector / Conservation",
+      challenge: "Raising global awareness and funding for anti-poaching initiatives during a tourism downturn.",
+      solution: "Partnered with global influencers for a 'Save the Heritage' digital storytelling campaign.",
+      result: "Raised $5M in private donations; campaign reached over 50M people globally.",
+    });
+    await storage.createCaseStudy({
+      client: "Kenya Airways",
+      industry: "Aviation",
+      challenge: "Crisis communication management during a significant operational disruption.",
+      solution: "Implemented a real-time transparent communication protocol across social and traditional media.",
+      result: "Maintained 70% customer loyalty retention; widely cited as a benchmark for crisis response in the region.",
     });
   }
 }
