@@ -20,6 +20,39 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-hook-form'],
+          'router': ['wouter'],
+          'ui-vendor': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-label',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-scroll-area',
+            '@radix-ui/react-select',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-slider',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-switch',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tooltip'
+          ],
+          'animation': ['framer-motion', 'embla-carousel-react', 'embla-carousel-autoplay'],
+          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority', 'date-fns'],
+          'icons': ['lucide-react'],
+          'query': ['@tanstack/react-query'],
+          'form': ['@hookform/resolvers', 'zod']
+        }
+      }
+    }
   },
   server: {
     fs: {
